@@ -1,51 +1,72 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 int main() {
-    printf("Program matrik ketetanggaan\n");
-    printf("===========================\n");
-    
-    int a[7][7];
-    int hm[7] = {0, 0, 0, 0, 0, 0, 0};
-    int T[7] = {0, 0, 0, 0, 0, 0, 0};
-    int baris;
+    int num_nodes;
 
-    printf("input jumlah vertex: ");
-    scanf("%d", &baris);
+    // Mendapatkan jumlah vertex dari user
+    printf("Masukkan jumlah vertex: ");
+    scanf("%d", &num_nodes);
+    printf("\n");
 
-    for (int i = 0; i < baris; i++) {
-        for (int j = 0; j < baris; j++) {
-            printf("jika vertek %d dan vertek ke %d terhubung, tulis 1\n", 
-i+1, j+1);
-	    printf("jika tidak, tulis 0: \n");
-            scanf("%d", &a[i][j]);
+    // Deklarasi matriks adjacency
+    int adj_matrix[num_nodes][num_nodes];
+
+    // Inisialisasi matriks adjacency
+    for (int i = 0; i < num_nodes; i++) {
+        for (int j = 0; j < num_nodes; j++) {
+            adj_matrix[i][j] = 0;
         }
     }
 
-    // mengisi array hm dengan vertex yang terhubung ke vertex 1
-    for (int i = 1; i < baris; i++) {
-        hm[i] = a[0][i];
-    }
-
-    // perubahan nilai hm
-    for (int i = 1; i < baris; i++) {
-        for (int j = 1; j < baris; j++) {
-            if (hm[j] == 1 && T[j] == 0) {
-                T[j] = 1;
-                for (int k = 1; k < baris; k++) {
-                    if (a[j][k] == 1 && hm[k] == 0) {
-                        // Lakukan tindakan yang sesuai di sini
-                    }
-                }
+    // Input edge dari user
+    for (int i = 0; i < num_nodes; i++) {
+        for (int j = 0; j < num_nodes; j++) {
+            int is_connected;
+            printf("Apakah ada edge dari %d ke %d (1/0): ", i + 1, j + 1);
+            scanf("%d", &is_connected);
+            if (is_connected) {
+                adj_matrix[i][j] = 1;
             }
         }
     }
 
-    printf("Matriks Ketetanggaan:\n");
-    for (int i = 0; i < baris; i++) {
-        for (int j = 0; j < baris; j++) {
-            printf("%d ", a[i][j]);
+    // Menghitung derajat vertex
+    int vertex_degrees[num_nodes];
+    for (int i = 0; i < num_nodes; i++) {
+        vertex_degrees[i] = 0;
+        for (int j = 0; j < num_nodes; j++) {
+            vertex_degrees[i] += adj_matrix[i][j];
+        }
+    }
+
+    // Mengecek konektivitas graf
+    int is_connected = 0;
+    for (int i = 0; i < num_nodes; i++) {
+        if (vertex_degrees[i] > 0) {
+            is_connected = 1;
+            break;
+        }
+    }
+
+    // Mencetak informasi graf
+    printf("\n");
+    printf("===================== \n");
+    printf("   Matriks adjacency \n");
+    printf("===================== \n");
+    for (int i = 0; i < num_nodes; i++) {
+        for (int j = 0; j < num_nodes; j++) {
+            printf("%d ", adj_matrix[i][j]);
         }
         printf("\n");
+    }
+    printf("\nInformasi Graf:\n");
+    printf("\n");
+    printf("Jumlah vertex: %d\n", num_nodes);
+    printf("Terhubung: %s\n", is_connected ? "Ya" : "Tidak");
+
+    for (int i = 0; i < num_nodes; i++) {
+        printf("Derajat vertex %d: %d\n", i + 1, vertex_degrees[i]);
     }
 
     return 0;
