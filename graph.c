@@ -1,6 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// 3
+void DFS(int vertex, int nomorNodes, int matriksAdjacency[nomorNodes][nomorNodes], int pengunjung[nomorNodes]) { 
+    pengunjung[vertex] = 1;
+    
+    for (int i = 0; i < nomorNodes; i++) {
+        if (matriksAdjacency[vertex][i] && !pengunjung[i]) {
+            DFS(i, nomorNodes, matriksAdjacency, pengunjung);
+        }
+    }
+}
 // 1
 int main() {
     int nomorNodes;
@@ -26,16 +36,6 @@ int main() {
         }
     }
 
-// 3
-void DFS(int vertex, int nomorNodes, int matriksAdjacency[nomorNodes][nomorNodes], int pengunjung[nomorNodes]) { 
-    pengunjung[vertex] = 1;
-    
-    for (int i = 0; i < nomorNodes; i++) {
-        if (matriksAdjacency[vertex][i] && !pengunjung[i]) {
-            DFS(i, nomorNodes, matriksAdjacency, pengunjung);
-        }
-    }
-}
 // 4
 int pengunjung[nomorNodes];
     for (int i = 0; i < nomorNodes; i++) {
