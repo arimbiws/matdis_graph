@@ -1,6 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Fungsi untuk melakukan pencarian kedalaman terlebih dahulu (depth-first search)
+void DFS(int vertex, int num_nodes, int adj_matrix[num_nodes][num_nodes], int visited[num_nodes]) {
+    visited[vertex] = 1; // Menandai vertex yang sedang dikunjungi
+    for (int i = 0; i < num_nodes; i++) {
+        if (adj_matrix[vertex][i] && !visited[i]) { // Jika ada edge dan vertex belum dikunjungi
+            DFS(i, num_nodes, adj_matrix, visited); // Lakukan pencarian kedalaman terlebih dahulu dari vertex i
+        }
+    }
+}
+
 int main() {
     int num_nodes;
 
@@ -31,21 +41,17 @@ int main() {
         }
     }
 
-    // Menghitung derajat vertex
-    int vertex_degrees[num_nodes];
+    // Mengecek konektivitas graf menggunakan DFS
+    int visited[num_nodes];
     for (int i = 0; i < num_nodes; i++) {
-        vertex_degrees[i] = 0;
-        for (int j = 0; j < num_nodes; j++) {
-            vertex_degrees[i] += adj_matrix[i][j];
-        }
+        visited[i] = 0; // Menandai semua vertex belum dikunjungi
     }
 
-    // Mengecek konektivitas graf
     int is_connected = 0;
     for (int i = 0; i < num_nodes; i++) {
-        if (vertex_degrees[i] > 0) {
-            is_connected = 1;
-            break;
+        if (!visited[i]) { // Jika vertex belum dikunjungi
+            DFS(i, num_nodes, adj_matrix, visited); // Lakukan pencarian kedalaman terlebih dahulu dari vertex i
+            is_connected++; // Menambah jumlah komponen terhubung
         }
     }
 
@@ -63,7 +69,16 @@ int main() {
     printf("\nInformasi Graf:\n");
     printf("\n");
     printf("Jumlah vertex: %d\n", num_nodes);
-    printf("Terhubung: %s\n", is_connected ? "Ya" : "Tidak");
+    printf("Terhubung: %s\n", is_connected == 1 ? "Ya" : "Tidak"); // Jika jumlah komponen terhubung hanya 1, maka graf terhubung
+
+    // Menghitung derajat vertex
+    int vertex_degrees[num_nodes];
+    for (int i = 0; i < num_nodes; i++) {
+        vertex_degrees[i] = 0;
+        for (int j = 0; j < num_nodes; j++) {
+            vertex_degrees[i] += adj_matrix[i][j];
+        }
+    }
 
     for (int i = 0; i < num_nodes; i++) {
         printf("Derajat vertex %d: %d\n", i + 1, vertex_degrees[i]);
