@@ -1,17 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
+/*
+perubahan 
+num_nodes = nomorNodes
+adj_matrix = matriksAdjacency
+visited = mengunjungi
+*/
 
-// Fungsi untuk melakukan pencarian kedalaman terlebih dahulu (depth-first search)
-void DFS(int vertex, int num_nodes, int adj_matrix[num_nodes][num_nodes], int visited[num_nodes]) {
-    visited[vertex] = 1; // Menandai vertex yang sedang dikunjungi
-    for (int i = 0; i < num_nodes; i++) {
-        if (adj_matrix[vertex][i] && !visited[i]) { // Jika ada edge dan vertex belum dikunjungi
-            DFS(i, num_nodes, adj_matrix, visited); // Lakukan pencarian kedalaman terlebih dahulu dari vertex i
-        }
-    }
-}
 
+// 1
 int main() {
+
     int num_nodes;
 
     // Mendapatkan jumlah vertex dari user
@@ -20,15 +19,14 @@ int main() {
     printf("\n");
 
     // Deklarasi matriks adjacency
-    int adj_matrix[num_nodes][num_nodes];
-
+    int adj_matrix[num_nodes][num_nodes]; 
     // Inisialisasi matriks adjacency
     for (int i = 0; i < num_nodes; i++) {
         for (int j = 0; j < num_nodes; j++) {
             adj_matrix[i][j] = 0;
         }
     }
-
+//2
     // Input edge dari user
     for (int i = 0; i < num_nodes; i++) {
         for (int j = 0; j < num_nodes; j++) {
@@ -41,6 +39,17 @@ int main() {
         }
     }
 
+// 3
+// Fungsi untuk melakukan pencarian kedalaman terlebih dahulu (depth-first search)
+void DFS(int vertex, int num_nodes, int adj_matrix[num_nodes][num_nodes], int visited[num_nodes]) {
+    visited[vertex] = 1; // Menandai vertex yang sedang dikunjungi
+    for (int i = 0; i < num_nodes; i++) {
+        if (adj_matrix[vertex][i] && !visited[i]) { // Jika ada edge dan vertex belum dikunjungi
+            DFS(i, num_nodes, adj_matrix, visited); // Lakukan pencarian kedalaman terlebih dahulu dari vertex i
+        }
+    }
+}
+// 4
     // Mengecek konektivitas graf menggunakan DFS
     int visited[num_nodes];
     for (int i = 0; i < num_nodes; i++) {
@@ -54,12 +63,15 @@ int main() {
             is_connected++; // Menambah jumlah komponen terhubung
         }
     }
-
+ 
+ // 5
     // Mencetak informasi graf
     printf("\n");
     printf("===================== \n");
     printf("   Matriks adjacency \n");
     printf("===================== \n");
+
+    //cetak matriks
     for (int i = 0; i < num_nodes; i++) {
         for (int j = 0; j < num_nodes; j++) {
             printf("%d ", adj_matrix[i][j]);
@@ -71,6 +83,7 @@ int main() {
     printf("Jumlah vertex: %d\n", num_nodes);
     printf("Terhubung: %s\n", is_connected == 1 ? "Ya" : "Tidak"); // Jika jumlah komponen terhubung hanya 1, maka graf terhubung
 
+//6.
     // Menghitung derajat vertex
     int vertex_degrees[num_nodes];
     for (int i = 0; i < num_nodes; i++) {
