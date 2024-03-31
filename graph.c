@@ -95,7 +95,7 @@ int main() {
     }
 
     for (int i = 0; i < nomorNodes; i++) {
-        int vertex = derajatVertex[i];
+        int vertex = i;
         if (warna[vertex] == 0) {
             int j = 1;
             while (1) {
