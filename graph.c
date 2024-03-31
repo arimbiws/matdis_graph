@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//1
 void DFS(int vertex, int nomorNodes, int matriksAdjacency[nomorNodes][nomorNodes], int pengunjung[nomorNodes]) { 
     pengunjung[vertex] = 1;
     
@@ -23,7 +24,7 @@ int main() {
             matriksAdjacency[i][j] = 0;
         }
     }
-
+//2
     for (int i = 0; i < nomorNodes; i++) {
         for (int j = 0; j < nomorNodes; j++) {
             int penghubung;
@@ -39,7 +40,7 @@ int main() {
     for (int i = 0; i < nomorNodes; i++) {
         pengunjung[i] = 0;
     }
-
+//3
     int penghubung = 0;
     for (int i = 0; i < nomorNodes; i++) {
         if (!pengunjung[i]) {
@@ -59,6 +60,7 @@ int main() {
         }
         printf("\n");
     }
+//4
     printf("\nInformasi Graf:\n");
     printf("\n");
     printf("Jumlah vertex: %d\n", nomorNodes);
@@ -71,7 +73,7 @@ int main() {
             derajatVertex[i] += matriksAdjacency[i][j];
         }
     }
-
+//5
     // Pengurutan derajat vertex dengan Bubble Sort
     for (int i = 0; i < nomorNodes-1; i++) {
         for (int j = 0; j < nomorNodes-i-1; j++) {
@@ -87,8 +89,8 @@ int main() {
     for (int i = 0; i < nomorNodes; i++) {
         printf("Derajat vertex ke %d adalah %d\n", i + 1, derajatVertex[i]);
     }
-
-    // Algoritma pewarnaan
+//6
+    // Algoritma pendekatan Greedy
     int warna[nomorNodes];
     for (int i = 0; i < nomorNodes; i++) {
         warna[i] = 0;
