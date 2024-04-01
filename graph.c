@@ -117,10 +117,25 @@ int main() {
         }
     }
 
-    printf("Warna yang diberikan untuk setiap vertex:\n");
-    for (int i = 0; i < nomorNodes; i++) {
-        printf("Warna vertex ke %d adalah %d\n", i + 1, warna[i]);
+printf("Warna yang diberikan untuk setiap vertex:\n");
+for (int i = 0; i < nomorNodes; i++) {
+    printf("Warna vertex ke %d adalah ", i + 1);
+    if (warna[i] == 1) {
+        printf("merah\n");
+        } else if (warna[i] == 2) {
+            printf("hijau\n");
+            } else if (warna[i] == 3) {
+                printf("biru\n");
+                } else if (warna[i] == 4) {
+                    printf("ungu\n");
+                    } else if (warna[i] == 5) {
+                        printf("kuning\n");
+                        } else if (warna[i] == 6) {
+                            printf("cokelat\n");
+    } else {
+        printf("tidak valid\n");
     }
+}
 
     return 0;
 }
