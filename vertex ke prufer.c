@@ -1,4 +1,4 @@
-//1
+//1 arimbi
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -19,7 +19,7 @@ int* getPruferCode(int n, int** edges, int m) {
                 leaf = i;
             }
         }
-//2
+//2 there
         int u = (edges[j][0] == leaf) ? edges[j][1] : edges[j][0];
         j++;
         degree[u]--;
@@ -42,7 +42,7 @@ int main() {
         printf("Jumlah edge harus sama dengan jumlah vertex minus satu.\n");
         return 1;
     }
-// 3
+// 3 mahda
     int** edges = malloc(m * sizeof(int*));
     for (int i = 0; i < m; i++) {
         edges[i] = malloc(2 * sizeof(int));

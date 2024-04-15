@@ -1,3 +1,4 @@
+//tangkas 
 #include <stdio.h>
 
 // Prints edges of tree represented by given Prufer code
@@ -14,8 +15,8 @@ void printTreeEdges(int prufer[], int m)
     for (int i = 0; i < vertices - 2; i++)
         vertex_set[prufer[i] - 1] += 1;
 
-    printf("\nThe edge set E(G) is :\n");
-
+    printf("\nHimpunan edge E(G) adalah :\n");
+//arief
     // Find the smallest label not present in
     // prufer[].
     int j = 0;
@@ -47,15 +48,15 @@ void printTreeEdges(int prufer[], int m)
     }
 }
 
-// Driver code
+// skye
 int main()
 {
     int n;
-    printf("Enter the number of elements in the Prufer Code: ");
+    printf("Masukkan jumlah elemen yang ada pada Kode Prufer: ");
     scanf("%d", &n);
     int prufer[n];
 
-    printf("Enter the elements of the Prufer Code: ");
+    printf("Masukkan elemennya: ");
     for (int i = 0; i < n; i++)
         scanf("%d", &prufer[i]);
 
