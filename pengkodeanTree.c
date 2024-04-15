@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void prufer_code_reduce_tree(int tree[], int n) {
-    int prufer_code[n - 2];
+void pruferCode_reduce_tree(int tree[], int n) {
+    int pruferCode[n - 2];
     int degrees[n];
 
     // Inisialisasi derajat setiap simpul menjadi 1
@@ -18,34 +18,34 @@ void prufer_code_reduce_tree(int tree[], int n) {
     int j = 0;
     for (int i = 0; i < n - 2; i++) {
         // Cari simpul dengan derajat keluar 1 terkecil
-        int min_leaf;
+        int min_daun;
         for (int k = 0; k < n; k++) {
             if (degrees[k] == 1) {
-                min_leaf = k;
+                min_daun = k;
                 break;
             }
         }
 
         // Temukan simpul yang terhubung dengan simpul tersebut
-        int parent = tree[j++];
-        prufer_code[i] = parent;
+        int induk = tree[j++];
+        pruferCode[i] = induk;
 
         // Kurangi derajat simpul yang terhubung
-        degrees[parent]--;
-        degrees[min_leaf]--;
+        degrees[induk]--;
+        degrees[min_daun]--;
 
         // Tampilkan simpul yang dihapus
-        printf("Langkah %d: Hapus simpul %d\n", i + 1, min_leaf);
+        printf("Langkah %d: Hapus simpul %d\n", i + 1, min_daun + 1);
     }
 
     // Sisa dua simpul adalah simpul yang tidak terdapat dalam kode Prufer
-    int leaf1, leaf2;
+    int daun1, daun2;
     for (int i = 0; i < n; i++) {
         if (degrees[i] == 1) {
-            if (leaf1 == 0) {
-                leaf1 = i;
+            if (daun1 == 0) {
+                daun1 = i;
             } else {
-                leaf2 = i;
+                daun2 = i;
                 break;
             }
         }
@@ -54,10 +54,10 @@ void prufer_code_reduce_tree(int tree[], int n) {
     // Tampilkan hasil
     printf("\nPrufer Code: ");
     for (int i = 0; i < n - 2; i++) {
-        printf("%d ", prufer_code[i]);
+        printf("%d ", pruferCode[i]);
     }
     printf("\n");
-    printf("Edge yang Dikurangi: (%d, %d)\n", leaf1, leaf2);
+    printf("Edge yang Dikurangi: (%d, %d)\n", daun1, daun2 + 1);
 }
 
 int main() {
@@ -71,7 +71,7 @@ int main() {
         scanf("%d", &tree[i]);
     }
 
-    prufer_code_reduce_tree(tree, n);
+    pruferCode_reduce_tree(tree, n);
 
     return 0;
 }
