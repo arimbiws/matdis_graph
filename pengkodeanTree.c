@@ -35,7 +35,7 @@ void pruferCode_reduce_tree(int tree[], int n) {
         degrees[min_daun]--;
 
         // Tampilkan simpul yang dihapus
-        printf("Langkah %d: Hapus simpul %d\n", i + 1, min_daun + 1);
+        printf("Langkah %d: Hapus simpul %d\n", i + 1, min_daun);
     }
 
     // Sisa dua simpul adalah simpul yang tidak terdapat dalam kode Prufer
@@ -57,7 +57,7 @@ void pruferCode_reduce_tree(int tree[], int n) {
         printf("%d ", pruferCode[i]);
     }
     printf("\n");
-    printf("Edge yang Dikurangi: (%d, %d)\n", daun1, daun2 + 1);
+    printf("Edge yang Dikurangi: (%d, %d)\n", daun1, daun2);
 }
 
 int main() {
