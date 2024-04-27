@@ -12,7 +12,6 @@ int M[6][6] = {
 int T[6];
 int p, v, vn, k, m, mst;
 
-
 int main() {
     for (int i = 0; i < 6; i++) {
         T[i] = 0;
