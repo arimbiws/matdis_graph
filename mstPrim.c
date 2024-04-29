@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int M[6][6] = {
+// Inisialisasi graf berbobot
+int graf[6][6] = {
     {0, 10, 0, 30, 45, 0},
     {10, 0, 50, 0, 40, 25},
     {0, 50, 0, 0, 35, 15},
@@ -9,35 +10,48 @@ int M[6][6] = {
     {45, 40, 35, 0, 0, 55},
     {0, 52, 15, 20, 55, 0}
 };
-int T[6];
-int p, v, vn, k, m, mst;
+
+int dikunjungi[6];
+int bobotMST = 0;
+
+// Fungsi untuk mencari sisi terkecil yang menghubungkan simpul dalam MST
+void cariSisiTerkecil(int *v, int *vn) {
+    int min = 999;
+    for (int i = 0; i < 6; i++) {
+        if (dikunjungi[i]) {
+            for (int j = 0; j < 6; j++) {
+                if (!dikunjungi[j] && graf[i][j] != 0 && graf[i][j] < min) {
+                    min = graf[i][j];
+                    *v = i;
+                    *vn = j;
+                }
+            }
+        }
+    }
+}
+
+// Fungsi untuk membangun Minimum Spanning Tree
+void bangunMST() {
+    dikunjungi[0] = 1;
+    int k = 1;
+
+    while (k <= 5) {
+        int m, v, vn;
+        cariSisiTerkecil(&v, &vn);
+        printf("%d - %d\n", v, vn);
+        bobotMST += graf[v][vn];
+        dikunjungi[vn] = 1;
+        k++;
+    }
+}
 
 int main() {
     for (int i = 0; i < 6; i++) {
-        T[i] = 0;
+        dikunjungi[i] = 0;
     }
-    T[0] = 1;
-    k = 1;
-    while (k <= 5) {
-        m = 99;
-        p = 0;
-        while (p <= 5) {
-            if (T[p] == 1) {
-                for (int i = 0; i <= 5; i++) {
-                    if ((M[p][i] < m) && (M[p][i] != 0) && (T[i] != 1) && (p != i)) {
-                        m = M[p][i];
-                        v = p;
-                        vn = i;
-                    }
-                }
-            }
-            p++;
-        }
-        printf("%d - %d\n", v, vn);
-        mst = mst + m;
-        T[vn] = 1;
-        k++;
-    }
-    printf("MST weight: %d\n", mst);
+
+    bangunMST();
+
+    printf("Bobot MST tersebut sebesar : %d\n", bobotMST);
     return 0;
 }
