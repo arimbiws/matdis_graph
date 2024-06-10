@@ -1,74 +1,75 @@
 #include <stdio.h>
-#define V 4
+#define V 5
 #define INF 99999
 
-void cetakRute(int path[][V], int src, int dest) {
-    if (path[src][dest] == src) {
-        printf(" -> %c", dest + 'A');
+void cetakRute(int jalur[][V], int asal, int tujuan) {
+    if (jalur[asal][tujuan] == asal) {
+        printf(" -> %c", tujuan + 'A');
         return;
     }
-    cetakRute(path, src, path[src][dest]);
-    printf(" -> %c", dest + 'A');
+    cetakRute(jalur, asal, jalur[asal][tujuan]);
+    printf(" -> %c", tujuan + 'A');
 }
 
-void cetakHasil(int jarak[][V], int path[][V], int src) {
+void cetakHasil(int jarak[][V], int jalur[][V], int asal) {
     printf("\nSimpul\tJarak dari Sumber\n");
     for (int i = 0; i < V; i++) {
         printf("%c\t\t", i + 'A');
-        if (jarak[src][i] == INF)
+        if (jarak[asal][i] == INF)
             printf("INF\n");
         else
-            printf("%d\n", jarak[src][i]);
+            printf("%d\n", jarak[asal][i]);
     }
 
-    printf("\nRute terpendek dari %c ke simpul lainnya:\n", src + 'A');
+    printf("\nRute terpendek dari %c ke simpul lainnya:\n", asal + 'A');
     for (int i = 0; i < V; i++) {
-        if (i != src && jarak[src][i] != INF) {
-            printf("Jalur dari %c ke %c: %c", src + 'A', i + 'A', src + 'A');
-            cetakRute(path, src, i);
+        if (i != asal && jarak[asal][i] != INF) {
+            printf("Jalur dari %c ke %c: %c", asal + 'A', i + 'A', asal + 'A');
+            cetakRute(jalur, asal, i);
             printf("\n");
         }
     }
 }
 
-void floydWarshall(int graph[][V], int src) {
-    int jarak[V][V], path[V][V], i, j, k;
+void floydWarshall(int graph[][V], int asal) {
+    int jarak[V][V], jalur[V][V], i, j, k;
 
     for (i = 0; i < V; i++) {
-        for (j = 0; j < V; j++) {
+    for (j = 0; j < V; j++) {
             jarak[i][j] = graph[i][j];
             if (i == j || graph[i][j] == INF) {
-                path[i][j] = -1;
+                jalur[i][j] = -1;
             } else {
-                path[i][j] = i;
+                jalur[i][j] = i;
             }
         }
     }
 
     for (k = 0; k < V; k++) {
-        for (i = 0; i < V; i++) {
-            for (j = 0; j < V; j++) {
-                if (jarak[i][k] + jarak[k][j] < jarak[i][j]) {
-                    jarak[i][j] = jarak[i][k] + jarak[k][j];
-                    path[i][j] = path[k][j];
-                }
+    for (i = 0; i < V; i++) {
+    for (j = 0; j < V; j++) {
+        if (jarak[i][k] + jarak[k][j] < jarak[i][j]) {
+                jarak[i][j] = jarak[i][k] + jarak[k][j];
+            jalur[i][j] = jalur[k][j];
             }
         }
     }
+    }
 
-    cetakHasil(jarak, path, src);
+    cetakHasil(jarak, jalur, asal);
 }
 
 int main() {
     int graph[V][V] = {
-        {0, 5, 9, INF},
-        {5, 0, 3, 1},
-        {9, 3, 0, 1},
-        {INF, 1, 1, 0}
+        {0, 3, 8, INF, -4},
+        {INF, 0, INF, 1, 7},
+        {INF, 4, 0, INF, INF},
+        {2, INF, -5, 0, INF},
+        {INF, INF, INF, 6, 0}
     };
 
     for (int i = 0; i < V; i++) {
-        floydWarshall(graph, i);
+    floydWarshall(graph, i);
     }
 
     return 0;
