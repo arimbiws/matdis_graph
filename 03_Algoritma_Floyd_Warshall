@@ -11,19 +11,19 @@ void cetakRute(int jalur[][V], int asal, int tujuan) {
     printf(" -> %c", tujuan + 'A');
 }
 
-void cetakHasil(int jarak[][V], int jalur[][V], int asal) {
-    printf("\nSimpul\tJarak dari Sumber\n");
+void cetakHasil(int matriks[][V], int jalur[][V], int asal) {
+    printf("\nSimpul\tmatriks dari Sumber\n");
     for (int i = 0; i < V; i++) {
         printf("%c\t\t", i + 'A');
-        if (jarak[asal][i] == INF)
+        if (matriks[asal][i] == INF)
             printf("INF\n");
         else
-            printf("%d\n", jarak[asal][i]);
+            printf("%d\n", matriks[asal][i]);
     }
 
     printf("\nRute terpendek dari %c ke simpul lainnya:\n", asal + 'A');
     for (int i = 0; i < V; i++) {
-        if (i != asal && jarak[asal][i] != INF) {
+        if (i != asal && matriks[asal][i] != INF) {
             printf("Jalur dari %c ke %c: %c", asal + 'A', i + 'A', asal + 'A');
             cetakRute(jalur, asal, i);
             printf("\n");
@@ -32,11 +32,11 @@ void cetakHasil(int jarak[][V], int jalur[][V], int asal) {
 }
 
 void floydWarshall(int graph[][V], int asal) {
-    int jarak[V][V], jalur[V][V], i, j, k;
+    int matriks[V][V], jalur[V][V], i, j, k;
 
     for (i = 0; i < V; i++) {
     for (j = 0; j < V; j++) {
-            jarak[i][j] = graph[i][j];
+            matriks[i][j] = graph[i][j];
             if (i == j || graph[i][j] == INF) {
                 jalur[i][j] = -1;
             } else {
@@ -48,15 +48,15 @@ void floydWarshall(int graph[][V], int asal) {
     for (k = 0; k < V; k++) {
     for (i = 0; i < V; i++) {
     for (j = 0; j < V; j++) {
-        if (jarak[i][k] + jarak[k][j] < jarak[i][j]) {
-                jarak[i][j] = jarak[i][k] + jarak[k][j];
+        if (matriks[i][k] + matriks[k][j] < matriks[i][j]) {
+                matriks[i][j] = matriks[i][k] + matriks[k][j];
             jalur[i][j] = jalur[k][j];
             }
         }
     }
     }
 
-    cetakHasil(jarak, jalur, asal);
+    cetakHasil(matriks, jalur, asal);
 }
 
 int main() {
