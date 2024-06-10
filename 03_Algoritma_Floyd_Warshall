@@ -2,44 +2,38 @@
 #define V 4
 #define INF 99999
 
-// Deklarasi fungsi cetakRute
 void cetakRute(int path[][V], int src, int dest) {
     if (path[src][dest] == src) {
-        printf(" -> %d", dest);
+        printf(" -> %c", dest + 'A');
         return;
     }
     cetakRute(path, src, path[src][dest]);
-    printf(" -> %d", dest);
+    printf(" -> %c", dest + 'A');
 }
 
-void cetakHasil(int jarak[][V], int path[][V]) {
-    printf("Matriks berikut menunjukkan jarak terpendek antara setiap pasangan simpul:\n");
+void cetakHasil(int jarak[][V], int path[][V], int src) {
+    printf("\nSimpul\tJarak dari Sumber\n");
     for (int i = 0; i < V; i++) {
-        for (int j = 0; j < V; j++) {
-            if (jarak[i][j] == INF)
-                printf("%7s", "INF");
-            else
-                printf("%7d", jarak[i][j]);
-        }
-        printf("\n");
+        printf("%c\t\t", i + 'A');
+        if (jarak[src][i] == INF)
+            printf("INF\n");
+        else
+            printf("%d\n", jarak[src][i]);
     }
 
-    printf("\nRute terpendek antara setiap pasangan simpul:\n");
+    printf("\nRute terpendek dari %c ke simpul lainnya:\n", src + 'A');
     for (int i = 0; i < V; i++) {
-        for (int j = 0; j < V; j++) {
-            if (i != j && jarak[i][j] != INF) {
-                printf("Rute dari %d ke %d: %d ", i+1, j+1, i+1);
-                cetakRute(path, i, j);
-                printf(" -> %d\n", j);
-            }
+        if (i != src && jarak[src][i] != INF) {
+            printf("Jalur dari %c ke %c: %c", src + 'A', i + 'A', src + 'A');
+            cetakRute(path, src, i);
+            printf("\n");
         }
     }
 }
 
-void floydWarshall(int graph[][V]) {
+void floydWarshall(int graph[][V], int src) {
     int jarak[V][V], path[V][V], i, j, k;
 
-    // Inisialisasi jarak dan path
     for (i = 0; i < V; i++) {
         for (j = 0; j < V; j++) {
             jarak[i][j] = graph[i][j];
@@ -51,7 +45,6 @@ void floydWarshall(int graph[][V]) {
         }
     }
 
-    // Algoritma Floyd-Warshall
     for (k = 0; k < V; k++) {
         for (i = 0; i < V; i++) {
             for (j = 0; j < V; j++) {
@@ -63,17 +56,20 @@ void floydWarshall(int graph[][V]) {
         }
     }
 
-    cetakHasil(jarak, path);
+    cetakHasil(jarak, path, src);
 }
 
 int main() {
     int graph[V][V] = {
-        {0, INF, -2, INF},
-        {4, 0, 3, INF},
-        {INF, INF, 0, 2},
-        {INF, -1, INF, 0}
+        {0, 5, 9, INF},
+        {5, 0, 3, 1},
+        {9, 3, 0, 1},
+        {INF, 1, 1, 0}
     };
 
-    floydWarshall(graph);
+    for (int i = 0; i < V; i++) {
+        floydWarshall(graph, i);
+    }
+
     return 0;
 }
